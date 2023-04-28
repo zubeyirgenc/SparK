@@ -5,6 +5,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import os
+import sys
 from typing import Any, Callable, Optional, Tuple
 
 import PIL.Image as PImage
@@ -102,7 +103,7 @@ def build_metric_dataset_to_pretrain(args) -> Dataset:
         'border_mode': args.border_mode,
     }
     print(f'Using transform: {transform_cfg}')
-
+    # sys.path.append('/home/zubeyir/Desktop/work/r-d-metric-learning')
     from pl_multidataset import MetricDataModule
 
     dm = MetricDataModule(
