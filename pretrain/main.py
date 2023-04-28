@@ -22,7 +22,7 @@ from models import build_sparse_encoder
 from sampler import DistInfiniteBatchSampler, worker_init_fn
 from spark import SparK
 from utils import arg_util, misc, lamb
-from utils.imagenet import build_dataset_to_pretrain
+from utils.imagenet import build_dataset_to_pretrain, build_metric_dataset_to_pretrain
 from utils.lr_control import lr_wd_annealing, get_param_groups
 
 
@@ -42,7 +42,7 @@ def main_pt():
     
     # build data
     print(f'[build data for pre-training] ...\n')
-    dataset_train = build_dataset_to_pretrain(args.data_path, args.input_size)
+    dataset_train = build_metric_dataset_to_pretrain(args)
     data_loader_train = DataLoader(
         dataset=dataset_train, num_workers=args.dataloader_workers, pin_memory=True,
         batch_sampler=DistInfiniteBatchSampler(

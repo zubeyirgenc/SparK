@@ -80,3 +80,43 @@ def print_transform(transform, s):
     for t in transform.transforms:
         print(t)
     print('---------------------------\n')
+
+
+def build_metric_dataset_to_pretrain(args) -> Dataset:
+    """
+    You may need to modify this function to fit your own dataset.
+    :param args: the arguments
+    :return: the dataset used for pretraining
+    """
+    dataset_names = args.dataset_names
+
+    transform_cfg = {
+        'normalization': args.normalization,
+        'crop_and_pad': False,
+        'img_size': args.input_size,
+        'mean_std': {
+            'mean': args.mean,
+            'std': args.std,
+        },
+        'square': args.square,
+        'border_mode': args.border_mode,
+    }
+    print(f'Using transform: {transform_cfg}')
+
+    from pl_multidataset import MetricDataModule
+
+    dm = MetricDataModule(
+        data_config=args.config_yaml,
+        transform_cfg=transform_cfg,
+        dataset_names=dataset_names,
+        is_valid_file=None,
+        batch_size=args.bs,
+        num_workers=args.num_workers,
+        collate_fn=None,
+        use_sampler=False,
+        distributed_sampler=False,
+    )
+    dm.setup(stage='fit')
+    train_dls = dm.train_datasets[0]
+
+    return train_dls

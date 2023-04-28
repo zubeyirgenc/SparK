@@ -9,6 +9,7 @@ import os
 import sys
 
 from tap import Tap
+from typing import List
 
 import dist
 
@@ -31,6 +32,14 @@ class Args(Tap):
     # data hyperparameters
     bs: int = 4096
     dataloader_workers: int = 8
+    dataset_names: List[str] = ['product']
+    normalization: bool = True
+    mean: List[float] = [0.4449, 0.4040, 0.3725]
+    std: List[float] = [0.2663, 0.2552, 0.2532]
+    square: bool = True
+    border_mode: int = 0
+    config_yaml: str = 'data_config_local.yaml'
+    num_workers: int = 8
     
     # pre-training hyperparameters
     dp: float = 0.0

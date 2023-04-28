@@ -23,6 +23,8 @@ function mkd() {
 
 EXP_NAME=$1
 
+print "EXP_NAME: ${EXP_NAME}"
+
 EXP_DIR="${SPARK_DIR}/output_${EXP_NAME}"
 
 
