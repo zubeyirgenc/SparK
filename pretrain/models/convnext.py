@@ -101,6 +101,12 @@ class ConvNeXt(nn.Module):
 
 
 @register_model
+def convnext_nano(pretrained=False, in_22k=False, **kwargs):
+    model = ConvNeXt(depths=[2, 2, 8, 2], dims=[80, 160, 320, 640], **kwargs)
+    return model
+
+
+@register_model
 def convnext_tiny(pretrained=False, in_22k=False, **kwargs):
     model = ConvNeXt(depths=[3, 3, 9, 3], dims=[96, 192, 384, 768], **kwargs)
     return model
