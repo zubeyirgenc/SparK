@@ -1,4 +1,4 @@
-from models.convnext import convnext_small, convnext_base
+from models.convnext import convnext_small, convnext_base, convnext_nano
 # from timm.models.convnext import convnext_small
 import torch
 
@@ -53,6 +53,12 @@ def load_state_dict(model, state_dict, prefix='', ignore_missing="relative_posit
 
 
 if __name__ == '__main__':
+    nano_pretrained_path = '/home/zubeyir/Desktop/work/weights/convnext_nano_1kpretrained.pth'
+    model = convnext_nano()
+    checkpoint = torch.load(nano_pretrained_path)['module']
+    load_state_dict(model, checkpoint)
+    print('Nano done')
+
     small_pretrained_path = '/home/zubeyir/Desktop/work/weights/convnext_small_spark.pth'
     model = convnext_small()
     checkpoint = torch.load(small_pretrained_path)
